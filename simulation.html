@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>bio ia simulation</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <!-- add stuff here -->
+        <div id="wrapper">
+            <div id="controls">
+                <!--
+                controls:
+                -[x] number of simulations (number)
+                -[x] chance of a plant gaining energy (radio buttons)
+                -[x] start, stop, view, and step (buttons)
+                
+                data:
+                -[x] status
+                    -[x] simulation #
+                -[x] the results (textarea)
+                -->
+                <form>
+                    <label for="sim_count">Number of Simulations</label>
+                    <input type="number" id="sim_count" min="1"></input>
+                    <br />
+                    Plant energy gain chance
+                    <br />
+                    <input type="radio" id="ten" name="gain_chance" value="10"></input>
+                    <label for="ten">10%</label>
+                    <br />
+                    <input type="radio" id="twenty" name="gain_chance" value="20"></input>
+                    <label for="twenty">20%</label>
+                    <br />
+                    <input type="radio" id="thirty" name="gain_chance" value="30"></input>
+                    <label for="thirty">30%</label>
+                    <br />
+                    <input type="radio" id="forty" name="gain_chance" value="40"></input>
+                    <label for="forty">40%</label>
+                    <br />
+                    <input type="radio" id="fifty" name="gain_chance" value="50"></input>
+                    <label for="fifty">50%</label>
+                    <br />
+                    <input type="radio" id="sixty" name="gain_chance" value="60"></input>
+                    <label for="sixty">60%</label>
+                    <br />
+                    <input type="radio" id="seventy" name="gain_chance" value="70"></input>
+                    <label for="seventy">70%</label>
+                    <br />
+                    <input type="radio" id="eighty" name="gain_chance" value="80"></input>
+                    <label for="eighty">80%</label>
+                    <br />
+                    <input type="radio" id="ninety" name="gain_chance" value="90"></input>
+                    <label for="ninety">90%</label>
+                    <br />
+                    <input type="radio" id="hundred" name="gain_chance" value="100"></input>
+                    <label for="hundred">100%</label>
+                    <br />
+                </form>
+                <button id="start_sims">start</button><!--
+             --><button id="pause_sims">pause</button><!--
+             --><button id="view_sims">view</button><!--
+             --><button id="step_sims">step</button>
+                <hr />
+                <div id="status"></div>
+                <hr />
+                &#160;Data
+                <br />
+                <textarea id="data">
+                    
+                </textarea>
+            </div>
+            <div id="viewing">
+                
+            </div>
+        </div>
+        <!--
+        <script src="helpers.js"></script>
+        <script src="simulation.js"></script> -->
+    </body>
+</html>
