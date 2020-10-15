@@ -58,9 +58,9 @@
                     <br />
                 </form>
                 <button id="start_sims">start</button><!--
-             --><button id="pause_sims">pause</button><!--
-             --><button id="view_sims">view</button><!--
-             --><button id="step_sims">step</button>
+             --><button id="pause_sims" disabled>pause</button><!--
+             --><button id="view_sims" disabled>view</button><!--
+             --><button id="step_sims" disabled>step</button>
                 <hr />
                 <div id="status"></div>
                 <hr />
@@ -68,11 +68,11 @@
                 <br />
                 <textarea id="data"></textarea>
                 <hr />
-                <p>
+                <p>. &mdash; blank space</p>
+                <p># &mdash; plant</p>
+                <p>@ &mdash; herbivore</p>
             </div>
-            <div id="viewing">
-                
-            </div>
+            <div id="viewing"></div>
         </div>
         <script src="helpers.js"></script>
         <script src="simulation.js"></script>

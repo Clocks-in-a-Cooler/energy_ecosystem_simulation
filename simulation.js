@@ -101,7 +101,7 @@ class Simulation {
                             break;
                     }
                 } else {
-                    gridline += " ";
+                    gridline += ".";
                 }
             }
             lines.push(gridline);
