@@ -71,6 +71,7 @@ button:disabled {
 }
 
 #data {
-    width: 240px;
+    width: 244px;
     height: 120px;
+    overflow-y: scroll;
 }

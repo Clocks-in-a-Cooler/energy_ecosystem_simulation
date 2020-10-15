@@ -1,0 +1,1 @@
+var s = new Simulation(new Vector(40, 40), 900, 10, 0.1, console.log);
