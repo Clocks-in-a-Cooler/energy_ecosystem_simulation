@@ -27,20 +27,13 @@ class Simulation {
     }
     
     update() {
-        /*
-            on each step:
-            -[x] check if there are at least one of each species
-                -[x] if there is, update the simulation
-                -[x] otherwise, stop the simulation by calling this.output(this.steps)
-        */
-        
-        if (this.steps > 1000) {
-            this.output("sustainable");
+        if ((this.entities.filter(e => e instanceof Plant)).length > 1500) {
+            this.output((this.steps + " (overcrowded)"));
+            return;
         }
-        
         if (
             this.entities.some(e => e instanceof Plant) &&
-            this.entities.some(e => e instanceof Herbivore) &&
+            this.entities.some(e => e instanceof Herbivore)
         ) {
             this.steps++;
             this.entities = this.entities.filter(e => e.alive);
@@ -175,16 +168,15 @@ class Herbivore {
             var plant    = this.simulation.entity_at(random_element(plant_pos));
             plant.alive  = false;
             this.energy += Math.max(Math.floor(plant.energy / 5), 1);
-            console.log("eating...");
             return;
         }
         
         var empty_spaces = this.simulation.find_spaces(this.pos);
-        if (this.energy >= 16 && this.empty_spaces.length > 0) {
+        if (this.energy >= 16 && empty_spaces.length > 0) {
             var new_herbivore    = new Herbivore(random_element(empty_spaces), this.simulation);
             new_herbivore.energy = Math.floor(this.energy / 4);
             this.energy          = Math.floor(this.energy / 2);
-            this.simulation.push(new_herbivore); // welcome to the simulation!
+            this.simulation.entities.push(new_herbivore); // welcome to the simulation!
             return;
         }
         

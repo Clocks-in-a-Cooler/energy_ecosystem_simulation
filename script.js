@@ -44,6 +44,8 @@ function output(steps) {
         current_simulation = new Simulation(new Vector(40, 40), 90, 10, gain_chance, output);
     } else {
         status_panel.innerHTML = "done!";
+        this.paused            = true;
+        current_simulation     = null;
     }
 }
 
