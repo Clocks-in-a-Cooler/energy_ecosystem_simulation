@@ -34,9 +34,13 @@ class Simulation {
                 -[x] otherwise, stop the simulation by calling this.output(this.steps)
         */
         
+        if (this.steps > 1000) {
+            this.output("sustainable");
+        }
+        
         if (
             this.entities.some(e => e instanceof Plant) &&
-            this.entities.some(e => e instanceof Herbivore)
+            this.entities.some(e => e instanceof Herbivore) &&
         ) {
             this.steps++;
             this.entities = this.entities.filter(e => e.alive);
@@ -61,7 +65,7 @@ class Simulation {
     }
     
     find_spaces(pos, test) {
-        if (!test) {
+        if (test == undefined) {
             test = (pos) => {
                 return !this.is_occupied(pos);
             };
@@ -79,8 +83,8 @@ class Simulation {
             */
             
             return (
-                pos.x >= 0 && pos.x < this.size.x && pos.y >= 0 && pos.y < this.size.y &&
-                test(pos)
+                p.x >= 0 && p.x < this.size.x && p.y >= 0 && p.y < this.size.y &&
+                test(p)
             );
         });
     }
@@ -125,14 +129,19 @@ class Plant {
                 -[ ] the plant has at least 6 energy
             -[ ] otherwise, there is a chance of gaining energy (use this.simulation.gain_chance)
         */
-    }
-    
-    reproduce() {
-        /*
-        -[ ] search for an adjacent blank space
-        -[ ] new plant gets 1 energy
-        -[ ] this plant keeps 75% energy, rounded down
-        */
+        
+        var empty_spaces = this.simulation.find_spaces(this.pos);
+        if (empty_spaces.length > 0 && this.energy >= 6) {
+            var new_plant    = new Plant(random_element(empty_spaces), this.simulation);
+            new_plant.energy = 1
+            this.energy      = Math.floor(this.energy * 0.75);
+            this.simulation.entities.push(new_plant);
+            return;
+        }
+        
+        if (Math.random() < this.simulation.gain_chance) {
+            this.energy++;
+        }
     }
 }
 
@@ -145,6 +154,46 @@ class Herbivore {
     }
     
     update() {
+        /*
+            on each update, do one of these, in this order:
+            -[ ] find a plant to eat
+                -[ ] if one exists, gain 20% of its energy, rounded down. if there is less than 5 energy, gain 1
+            -[ ] if there is at least 16 energy and an empty space, reproduce
+                -[ ] child gets 25% of the energy, parent keeps 50%
+            -[ ] if energy is zero, die
+            -[ ] move to an adjacent empty space and use 1 energy
+        */
+        var plant_pos = this.simulation.find_spaces(this.pos, (pos) => {
+            if (this.simulation.is_occupied(pos)) {
+                return this.simulation.entity_at(pos).constructor == Plant;
+            } else {
+                return false;
+            }
+        });
         
+        if (plant_pos.length > 0) {
+            var plant    = this.simulation.entity_at(random_element(plant_pos));
+            plant.alive  = false;
+            this.energy += Math.max(Math.floor(plant.energy / 5), 1);
+            console.log("eating...");
+            return;
+        }
+        
+        var empty_spaces = this.simulation.find_spaces(this.pos);
+        if (this.energy >= 16 && this.empty_spaces.length > 0) {
+            var new_herbivore    = new Herbivore(random_element(empty_spaces), this.simulation);
+            new_herbivore.energy = Math.floor(this.energy / 4);
+            this.energy          = Math.floor(this.energy / 2);
+            this.simulation.push(new_herbivore); // welcome to the simulation!
+            return;
+        }
+        
+        if (this.energy <= 0) {
+            this.alive = false;
+            return;
+        }
+        
+        this.pos = random_element(empty_spaces);
+        this.energy--;
     }
 }

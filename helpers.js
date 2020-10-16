@@ -68,3 +68,7 @@ function reduce_angle(angle) {
 function round(number) {
     return Math.floor(number * 10) / 10;
 }
+
+function random_element(arr) {
+    return arr[Math.floor(arr.length * Math.random())];
+}

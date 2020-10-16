@@ -29,7 +29,7 @@ function view(plan) {
 }
 
 function set_gain_chance(evt) {
-   gain_chance = evt.target.value;
+   gain_chance = evt.target.value / 100;
 }
 
 var radio_buttons = document.getElementsByName("gain_chance");
@@ -39,7 +39,12 @@ function output(steps) {
     // a simulation just ended
     data_text_area.value += steps + ", ";
     remaining_simulations--;
-    current_simulation = new Simulation(new Vector(40, 40), 90, 10, gain_chance, output);
+    report_status();
+    if (remaining_simulations > 0) {
+        current_simulation = new Simulation(new Vector(40, 40), 90, 10, gain_chance, output);
+    } else {
+        status_panel.innerHTML = "done!";
+    }
 }
 
 function start() {
@@ -120,3 +125,5 @@ step_button.addEventListener("click", function() {
         view(current_simulation.print());
     }
 });
+
+document.getElementById("ten").click();
